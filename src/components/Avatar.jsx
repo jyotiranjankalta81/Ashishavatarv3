@@ -149,8 +149,6 @@ export function Avatar(props) {
 
     const audioObjectUrl = URL.createObjectURL(audioRes.data);
 
-    audio.src = audioObjectUrl;
-
     var data = new FormData();
 
     data.append("file", audioRes.data, "temp.ogg");//"temp.ogg");
@@ -181,7 +179,7 @@ export function Avatar(props) {
         setAnimation('Idle')
 
         setNewLipSync(JSON.stringify(response.data));
-
+        audio.src = audioObjectUrl;
         audio.play();
 
       })
