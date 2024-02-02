@@ -6,11 +6,13 @@ Command: npx gltfjsx@6.2.10 public/Models/model.glb -o src/components/Avatar.jsx
 import { useAnimations, useFBX, useGLTF } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useControls, button } from "leva";
+// import { useControls, button } from "leva";
 import axios from "axios";
 import * as THREE from "three";
 import fs from "fs";
 import path from "path";
+import AvatarForm from "./AvatarForm/AvatarForm";
+import ReactDOM from 'react-dom/client'
 
 const corresponding = {
   A: "viseme_PP",
@@ -27,20 +29,20 @@ const corresponding = {
 export function Avatar(props) {
   const [fileName, setFileName] = useState("");
 
-  const { script, chat } = useControls({
-    script: {
-      value: "-Select-",
-      options: ["-Select-", "Webinar Speech"],
-    },
-    chat: "",
-    Send: button(fnSendChat),
-    Repeat: button(fnRepeat),
-    Reset: button(fnReset),
+  // const { script, chat } = useControls({
+    // script: {
+    //   value: "-Select-",
+    //   options: ["-Select-", "Webinar Speech"],
+    // },
+    // chat: "",
+    // Send: button(fnSendChat),
+    // Repeat: button(fnRepeat),
+    // Reset: button(fnReset),
     // Greet: button(fnSalaam)
-  });
+  // });
 
-  function fnSendChat() {
-    var msg = document.getElementById("chat").value;
+  function fnSendChat(msg) {
+    // var msg = document.getElementById("chat").value;
     audio.src = "\\audios\\AboutQuery.ogg";
     setNewLipSync(JSON.stringify({
       "metadata": {
@@ -115,7 +117,7 @@ export function Avatar(props) {
     }, 3000);
   }
 
-  const serverUrl = "https://aidemo.infusai.com:8501";
+  const serverUrl = "https://aidemo.infusai.com:9001";
 
   const [newLipSync, setNewLipSync] = useState(
     '{\r\n  "metadata": {\r\n    "soundFile": "C:\\\\Users\\\\yashn\\\\AppData\\\\Local\\\\Temp\\\\temp.wav",\r\n    "duration": 2.84\r\n  },\r\n  "mouthCues": [\r\n    { "start": 0.00, "end": 0.09, "value": "X" },\r\n    { "start": 0.09, "end": 0.16, "value": "C" },\r\n    { "start": 0.16, "end": 0.30, "value": "E" },\r\n    { "start": 0.30, "end": 0.37, "value": "F" },\r\n    { "start": 0.37, "end": 1.10, "value": "X" },\r\n    { "start": 1.10, "end": 1.17, "value": "E" },\r\n    { "start": 1.17, "end": 1.51, "value": "C" },\r\n    { "start": 1.51, "end": 1.72, "value": "B" },\r\n    { "start": 1.72, "end": 1.93, "value": "F" },\r\n    { "start": 1.93, "end": 2.00, "value": "B" },\r\n    { "start": 2.00, "end": 2.14, "value": "C" },\r\n    { "start": 2.14, "end": 2.21, "value": "B" },\r\n    { "start": 2.21, "end": 2.84, "value": "X" }\r\n  ]\r\n}\r\n'
@@ -139,7 +141,7 @@ export function Avatar(props) {
 
     // Convert TTS
 
-    const audioRes = await axios.post('https://aidemo.infusai.com:8501/ttsPolly',
+    const audioRes = await axios.post('https://aidemo.infusai.com:9001/ttsPolly',
 
       { text: chatGptResponse.data.message }, // data
 
@@ -294,15 +296,23 @@ export function Avatar(props) {
     [idleAnimation[0], thinkAnimation[0], salaamAnimation[0]], //, danceAnimation[0], thinkingAnimation[0], dwarfAnimation[0]
     group,
   );
+  
+
+  useEffect(() => {
+    ReactDOM.createRoot(document.getElementById('avatar-form')).render(
+        <div className="avatar-form-wrapper"><AvatarForm fnSendChat={fnSendChat}  onScriptSelect={onScriptSelect} fnRepeat={fnRepeat} fnReset={fnReset}/></div>
+    )
+  
+  },[])
+  
 
   useEffect(() => {
     actions[animation].reset().fadeIn(0.5).play();
     return () => actions[animation].fadeOut(0.5);
   }, [animation]);
 
-  useEffect(() => {
-    debugger;
-    if (script === "Webinar Speech") {
+  function onScriptSelect(selectedValue){
+    if (selectedValue === "Webinar Speech") {
       audio.src = "\\audios\\temp_audio_Webinar.ogg";
       setNewLipSync(JSON.stringify({
         "metadata": {
@@ -531,7 +541,7 @@ export function Avatar(props) {
     //   audio.play();
     //   setAnimation("Dance");
     // }
-  }, [script]);
+  }
 
 
   return (

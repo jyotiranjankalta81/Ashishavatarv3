@@ -1,0 +1,47 @@
+.avatar-form-container{
+    width: 250px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 10px;
+    
+}
+.btn-container{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.label-input-container{
+    display: flex;
+    padding: 10px;
+    
+}
+.btn{
+    background-color: #3399CC;
+    color: white;
+    border: none;
+    margin-top: 2px;
+    height: 25px;
+    border-radius: 2px;
+    outline: none;
+}
+.input{
+    margin-left: 20px;
+    outline: none;
+}
+.select{
+    margin-left: 12px;
+    outline: none;
+}
+.form-nav{
+    width: 98.5%;
+    background-color: #3399CC;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
