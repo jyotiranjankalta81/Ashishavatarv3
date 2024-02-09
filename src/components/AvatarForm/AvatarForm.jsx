@@ -1,20 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import "./AvatarForm.css";
 import { motion } from "framer-motion";
 import { IoSearch } from "react-icons/io5";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { BiSolidRightArrow } from "react-icons/bi";
 import { RiMenu5Line } from "react-icons/ri";
+import { IoMdMic } from "react-icons/io";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import useDebounce from '../../hooks/UseDebounce';
+
 
 function AvatarForm(props) {
+  const startListening = () => {
+    SpeechRecognition.startListening({ continuous: true, language: "en-IN" })
+}; 
+const stopListening = () =>{
+  SpeechRecognition.stopListening()
+};
+    const {
+      transcript,
+      listening,
+      resetTranscript,
+      browserSupportsSpeechRecognition,
+    } = useSpeechRecognition();
+
+    if (!browserSupportsSpeechRecognition) {
+      return null
+    }
     console.log({props});
     const {fnSendChat,onScriptSelect,  fnRepeat, fnReset} = props;
-    const [seletedScriptValue, setSeletedScriptValue] = useState("-Select-")
-    const [chatMessage, setChatMessage] = useState("")
-    const [toggle,setToggle] = useState(true)
+    const [seletedScriptValue, setSeletedScriptValue] = useState("-Select-");
+    const [chatMessage, setChatMessage] = useState("");
+    const [toggle,setToggle] = useState(true);
+
+    const debounce = useDebounce(chatMessage,3000);
+    
+
+    useEffect(() => {
+      SpeechRecognition.stopListening()
+    }, [debounce])
+    
+    useEffect(() => {
+      setChatMessage(transcript)
+      
+    }, [transcript])
+    
+    
   return (
 
-    <motion.div drag className='avatar-form-container' >
+    <motion.div drag onClick={SpeechRecognition.stopListening} className='avatar-form-container' >
          <div className='form-nav'>
                {
                toggle ?  
@@ -47,12 +81,21 @@ function AvatarForm(props) {
         value={chatMessage}
         onChange={e => setChatMessage(e.target.value)}
         />
+
+        <IoMdMic
+            onClick={listening ? stopListening : startListening} // Only allow mic activation if it's not active
+            style={{ color: listening ? 'red' : 'inherit', cursor: listening ? 'not-allowed' : 'pointer' }} // Change color and cursor based on mic state
+        />
+       
        </div>
        <div className='btn-container'>
        <button className='btn' onClick={()=>fnSendChat(chatMessage)}>Send</button>
        <button className='btn' onClick={fnRepeat}>Repeat</button>
-       <button className='btn' onClick={()=>{
+       <button className='btn' onClick={(e)=>{
+        e.stopPropagation()
         fnReset() 
+        stopListening()
+        resetTranscript()
         setSeletedScriptValue("")
         setChatMessage("")
         }}>Reset</button>

@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./components/Experience";
 

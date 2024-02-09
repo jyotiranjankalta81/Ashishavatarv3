@@ -122,26 +122,30 @@ export function Avatar(props) {
   const [newLipSync, setNewLipSync] = useState(
     '{\r\n  "metadata": {\r\n    "soundFile": "C:\\\\Users\\\\yashn\\\\AppData\\\\Local\\\\Temp\\\\temp.wav",\r\n    "duration": 2.84\r\n  },\r\n  "mouthCues": [\r\n    { "start": 0.00, "end": 0.09, "value": "X" },\r\n    { "start": 0.09, "end": 0.16, "value": "C" },\r\n    { "start": 0.16, "end": 0.30, "value": "E" },\r\n    { "start": 0.30, "end": 0.37, "value": "F" },\r\n    { "start": 0.37, "end": 1.10, "value": "X" },\r\n    { "start": 1.10, "end": 1.17, "value": "E" },\r\n    { "start": 1.17, "end": 1.51, "value": "C" },\r\n    { "start": 1.51, "end": 1.72, "value": "B" },\r\n    { "start": 1.72, "end": 1.93, "value": "F" },\r\n    { "start": 1.93, "end": 2.00, "value": "B" },\r\n    { "start": 2.00, "end": 2.14, "value": "C" },\r\n    { "start": 2.14, "end": 2.21, "value": "B" },\r\n    { "start": 2.21, "end": 2.84, "value": "X" }\r\n  ]\r\n}\r\n'
   );
+  
+  const exceptionalMessageList = ["hi","hello"]
+  const isExceptionalMessage = (message) =>
+     exceptionalMessageList.some((exceptionalMessage)=> 
+      exceptionalMessage.toLowerCase()===message.toLowerCase())
+    
+  
 
-  const sendMessage = async (msg) => {
-
-    debugger;
-
+  const sendMessage = async (msg="") => {
     setAnimation("Think");
 
     console.log(serverUrl)
 
+    // filter the msg according to user input
+    const messageToSend = isExceptionalMessage(msg) ? msg : `${msg} Please provide the answer in maximum 3 lines`;
+    
 
-
-    // get Response from chatGPT
-
-    const chatGptResponse = await axios.post(`${serverUrl}/chat`, { message: msg })
-
-
-
+    //response
+    const chatGptResponse = await axios.post(`${serverUrl}/chat`, { message:  messageToSend  })
+   
     // Convert TTS
 
     const audioRes = await axios.post('https://aidemo.infusai.com:9001/ttsPolly',
+  
 
       { text: chatGptResponse.data.message }, // data
 
