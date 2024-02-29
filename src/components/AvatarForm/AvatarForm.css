@@ -1,0 +1,87 @@
+.avatar-form-container{
+    width: 250px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #E6E7EE;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: sans-serif;
+}
+.navbar-container{
+    display: flex;
+    justify-content: space-between;
+
+}
+.select-option-container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+.chat-container{
+    display: flex;
+    flex-direction: column;
+}
+.chat-container-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+     padding: 0px 10px 0px 5px;
+}
+.button-container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.send-button{
+   background-color: #00A651;
+}
+.send-button:hover{
+    background-color: #09763e;
+}
+.repeat-button{
+   background-color: #F7941D;
+}
+.repeat-button:hover{
+    background-color: #dd9016;
+ }
+.common-btn{
+    width: 100px;
+    height: 30px;
+    color: white;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+}
+.input-container{
+    width: 250px;
+    margin-top: -10px;
+}
+.input-area{
+    height: 90px;
+    width: 242px;
+    outline: none;
+    resize: none;
+}
+.select{
+    height: 32px;
+    outline: none;
+    cursor: pointer;
+}
+.font-class{
+    font-size: 18px;
+}
+.icon-size{
+    height: 22px;
+    cursor: pointer;
+}
+.icon-reset{
+    margin-right: 10px;
+}
+.input-area::placeholder{
+    padding: 2px;
+}
