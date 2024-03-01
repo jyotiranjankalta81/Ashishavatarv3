@@ -1,25 +1,31 @@
 import 'regenerator-runtime/runtime';
-import { Canvas } from "@react-three/fiber";
-import { Experience } from "./components/Experience";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Canvas } from '@react-three/fiber';
+import { Experience } from './components/Experience';
 import { AshishAvatar } from './components/AshishAvatar';
-import { useLocation } from 'react-router-dom';
 import { NeelamAvatar } from './components/NeelamAvatar';
 import { ArchanaAvatar } from './components/ArchanaAvatar';
 
 function App() {
-  const {pathname} = useLocation()
-  
-  const avatarMap = {
-    "/ashish": AshishAvatar,
-    "/neelam" : NeelamAvatar,
-    "/archana" : ArchanaAvatar,
-  }
+  return (
+    
+      <Routes>
+        <Route exact path="/ashish" element={<CanvasWrapper Avatar={AshishAvatar} />} />
+        <Route exact path="/neelam" element={<CanvasWrapper Avatar={NeelamAvatar} />} />
+        <Route exact path="/archana" element={<CanvasWrapper Avatar={ArchanaAvatar} />} />
+        {/* Add a default route */}
+        <Route path="*" element={<CanvasWrapper Avatar={AshishAvatar} />} />
+      </Routes>
+   
+  );
+}
 
-  const avatar = avatarMap[pathname?.toLowerCase()]|| avatarMap["/ashish"]
+function CanvasWrapper({ Avatar }) {
   return (
     <Canvas shadows camera={{ position: [0, 0, 8], fov: 42 }}>
-      <color attach="background" args={["#ececec"]} />
-      <Experience Avatar={avatar} />
+      <color attach="background" args={['#ececec']} />
+      <Experience Avatar={Avatar} />
     </Canvas>
   );
 }
