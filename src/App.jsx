@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route exact path="/ashish" element={<CanvasWrapper Avatar={AshishAvatar} />} />
         <Route exact path="/neelam" element={<CanvasWrapper Avatar={NeelamAvatar} />} />
-        <Route exact path="/archana" element={<CanvasWrapper Avatar={ArchanaAvatar} />} />
+        <Route path="/archana" element={<CanvasWrapper Avatar={ArchanaAvatar} />} />
         {/* Add a default route */}
         <Route path="*" element={<CanvasWrapper Avatar={AshishAvatar} />} />
       </Routes>
