@@ -1,0 +1,11 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["*.{css,scss,js,png,gif,ico,jpg,svg,ogg,glb,fbx,gltf,}"]
+  },
+  "routes": {
+  "route":"/ashish",
+  "redirect": "/okok",
+  "statusCode": 301
+  }
+}
