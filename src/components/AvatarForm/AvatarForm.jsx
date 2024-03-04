@@ -3,6 +3,7 @@ import "./AvatarForm.css";
 import { motion } from "framer-motion";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import UseDebounce from '../../hooks/useDebounce';
+// import { a } from 'react-router-dom';
 
 
 function AvatarForm(props) {
@@ -42,60 +43,73 @@ function AvatarForm(props) {
 
 
   return (
-    <motion.div drag onClick={SpeechRecognition.stopListening} className="avatar-form-container">
-      <div className="navbar-container">
-        {
-          toggle ?
-            <img onClick={() => setToggle(false)} className="icon-size" src="/images/ico-open-window.png" alt="" />
-            :
-            <img onClick={() => setToggle(true)} className="icon-size" src="/images/ico-close-window.png" alt="" />
-        }
-        <div>
-          <img onClick={(e) => {
-            e.stopPropagation()
-            fnReset()
-            stopListening()
-            resetTranscript()
-            setSeletedScriptValue("")
-            setChatMessage("")
-          }} className="icon-size icon-reset" src="/images/ico-reset-popup.png" alt="" />
-          <img className="icon-size" src="/images/ico-drag-window.png" alt="" />
-        </div>
-      </div>
-      {toggle ? <div>
-        <div className="select-option-container">
-          <label className="font-className" htmlFor="script-select">Demo Message</label>
-          <select className='select' name="" id="script-select" value={seletedScriptValue}
-            onChange={e => {
-              onScriptSelect(e.target.value)
-              setSeletedScriptValue(e.target.value)
-            }
-            }>
-            <option value="-Select-">-Select-</option>
-            <option value="Speech" >Speech</option>
-          </select>
-        </div>
-        <div className="chat-container">
-          <div className="chat-container-nav">
-            <p className="font-className">Ask Me</p>
-            {listening ? <img className="icon-size" src="/images/ico-mic-on.png" alt="" onClick={listening ? stopListening : startListening}
-              style={{ cursor: listening ? 'not-allowed' : 'pointer' }} /> : <img className="icon-size" src="/images/ico-mic-off.png" alt="" onClick={listening ? stopListening : startListening}
-                style={{ cursor: listening ? 'not-allowed' : 'pointer' }} />}
-          </div>
-          <div className="input-container">
-            <textarea className="input-area" type="text" id='chat-input' placeholder="Type your message here or click on mic to speak" value={chatMessage}
-              onChange={e => setChatMessage(e.target.value)}></textarea>
-          </div>
-        </div>
-        <div className="button-container">
-          <button className="send-button common-btn" onClick={() => fnSendChat(chatMessage)}>Send</button>
-          <button className="repeat-button common-btn" onClick={
-            fnRepeat
-          }>Repeat</button>
-        </div>
-      </div> : ""}
-    </motion.div>
+    <>
 
+
+
+      <motion.div drag onClick={SpeechRecognition.stopListening} className="avatar-form-container">
+
+        <div className="navbar-container">
+
+
+          {
+            toggle ?
+              <img onClick={() => setToggle(false)} className="icon-size" src="/images/ico-open-window.png" alt="" />
+              :
+              <img onClick={() => setToggle(true)} className="icon-size" src="/images/ico-close-window.png" alt="" />
+          }
+          <div>
+            <img onClick={(e) => {
+              e.stopPropagation()
+              fnReset()
+              stopListening()
+              resetTranscript()
+              setSeletedScriptValue("")
+              setChatMessage("")
+            }} className="icon-size icon-reset" src="/images/ico-reset-popup.png" alt="" />
+            <img className="icon-size" src="/images/ico-drag-window.png" alt="" />
+          </div>
+        </div>
+        {toggle ? <div>
+          <div className="select-option-container">
+            <label className="font-className" htmlFor="script-select">Demo Message</label>
+            <select className='select' name="" id="script-select" value={seletedScriptValue}
+              onChange={e => {
+                onScriptSelect(e.target.value)
+                setSeletedScriptValue(e.target.value)
+              }
+              }>
+              <option value="-Select-">-Select-</option>
+              <option value="Speech" >Speech</option>
+            </select>
+          </div>
+          <div className="chat-container">
+            <div className="chat-container-nav">
+              <p className="font-className">Ask Me</p>
+              {listening ? <img className="icon-size" src="/images/ico-mic-on.png" alt="" onClick={listening ? stopListening : startListening}
+                style={{ cursor: listening ? 'not-allowed' : 'pointer' }} /> : <img className="icon-size" src="/images/ico-mic-off.png" alt="" onClick={listening ? stopListening : startListening}
+                  style={{ cursor: listening ? 'not-allowed' : 'pointer' }} />}
+            </div>
+            <div className="input-container">
+              <textarea className="input-area" type="text" id='chat-input' placeholder="Type your message here or click on mic to speak" value={chatMessage}
+                onChange={e => setChatMessage(e.target.value)}></textarea>
+              <div style={{ display: "flex", gap: "0.5rem", backgroundColor: "yellow", color: "green", height: "1rem" }}>
+                <a href="/ashish">Ashish</a>
+                <a href="/neelam">Neelam</a>
+                <a href="/archana">Archana</a>
+                <a href="/">None</a>
+              </div>
+            </div>
+          </div>
+          <div className="button-container">
+            <button className="send-button common-btn" onClick={() => fnSendChat(chatMessage)}>Send</button>
+            <button className="repeat-button common-btn" onClick={
+              fnRepeat
+            }>Repeat</button>
+          </div>
+        </div> : ""}
+      </motion.div>
+    </>
   )
 }
 

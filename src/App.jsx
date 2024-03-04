@@ -9,8 +9,9 @@ import { ArchanaAvatar } from './components/ArchanaAvatar';
 
 function App() {
   return (
-    
+     
       <Routes>
+      
         <Route exact path="/ashish" element={<CanvasWrapper Avatar={AshishAvatar} />} />
         <Route exact path="/neelam" element={<CanvasWrapper Avatar={NeelamAvatar} />} />
         <Route path="/archana" element={<CanvasWrapper Avatar={ArchanaAvatar} />} />
